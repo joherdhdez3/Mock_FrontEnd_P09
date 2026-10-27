@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Notificaciones de productos</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <header class="barra">
+    <h1>Notificaciones de productos</h1>
+    <p id="estado" class="estado estado-desconectado" role="status">Desconectado</p>
+  </header>
+
+  <main class="layout">
+
+    <section class="conexion" aria-labelledby="t-conexion">
+      <h2 id="t-conexion">Conexión</h2>
+
+      <form id="form-conexion" autocomplete="off">
+        <label for="url">URL del WebSocket</label>
+        <input
+            id="url"
+            type="text"
+            placeholder="ws://localhost:PUERTO/RUTA"
+            spellcheck="false"
+        >
+
+        <label for="token">Token JWT</label>
+        <input id="token" type="password" spellcheck="false" autocomplete="off"
+               placeholder="Pega el token">
+
+        <div class="acciones">
+          <button type="submit" id="btn-conectar">Conectar</button>
+          <button type="button" id="btn-desconectar" class="secundario" disabled>Desconectar</button>
+        </div>
+      </form>
+
+      <p id="detalle" class="detalle"></p>
+
+      <dl class="contadores">
+        <div class="contador c-creados">
+          <dt>Creados</dt>
+          <dd id="n-creados">0</dd>
+        </div>
+        <div class="contador c-actualizados">
+          <dt>Actualizados</dt>
+          <dd id="n-actualizados">0</dd>
+        </div>
+        <div class="contador c-otros">
+          <dt>No esperados</dt>
+          <dd id="n-otros">0</dd>
+        </div>
+      </dl>
+    </section>
+
+    <div class="resultados">
+
+      <section class="eventos" aria-labelledby="t-eventos">
+        <div class="encabezado-seccion">
+          <h2 id="t-eventos">Eventos recibidos</h2>
+          <button type="button" id="btn-limpiar" class="secundario">Limpiar pantalla</button>
+        </div>
+
+        <p id="vacio-eventos" class="vacio">
+          Todavía no llega ningún evento. Conecta y luego crea o actualiza un producto,
+          por REST o por GraphQL.
+        </p>
+        <ol id="lista-eventos" class="lista-eventos" tabindex="0"
+            aria-label="Lista de eventos recibidos, el más reciente primero"
+            aria-live="polite" aria-relevant="additions"></ol>
+      </section>
+
+      <section class="productos" aria-labelledby="t-productos">
+        <h2 id="t-productos">Productos vistos</h2>
+
+        <p id="vacio-productos" class="vacio">
+          Los productos aparecen aquí cuando llega su primer evento.
+        </p>
+        <div id="tabla-scroll" class="tabla-scroll" hidden>
+          <table>
+            <thead>
+              <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Nombre</th>
+                <th scope="col" class="num">Precio</th>
+                <th scope="col">Estado</th>
+                <th scope="col">Último evento</th>
+              </tr>
+            </thead>
+            <tbody id="tabla-productos"></tbody>
+          </table>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
